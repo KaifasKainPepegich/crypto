@@ -1,9 +1,13 @@
+import { useContext } from 'react'
 import styles from './styles.module.scss'
+import { CoinsContext } from '../../context/coinsContext'
 
-export const CoinsList = ({ coins }) => {
+export const CoinsList = () => {
+  const coinsContext = useContext(CoinsContext)
+  const { filteredCoins } = coinsContext
   return (
     <ul className={styles.list}>
-      {coins.map((coin) => {
+      {filteredCoins.map((coin) => {
         return (
           <li className={styles.item} key={coin.uuid}>
             <div className={styles.info}>

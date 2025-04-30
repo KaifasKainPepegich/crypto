@@ -1,15 +1,13 @@
-import { useEffect, useState } from 'react'
+import { memo, useContext } from 'react'
 import styles from './styles.module.scss'
+import { CoinsContext } from '../../context/coinsContext'
+import { useFilterCoins } from '../../helpers/hooks/useFilterCoins'
 
-export const FilterBlock = ({ coins, setCoins }) => {
-  const [value, setValue] = useState('')
+const FilterBlock = ({ setCoins }) => {
+  const coinsContext = useContext(CoinsContext)
+  const { coins } = coinsContext
 
-  useEffect(() => {
-    const filteredCoins = coins.filter((coin) => {
-      return coin.name.toLowerCase().includes(value.toLowerCase())
-    })
-    setCoins(filteredCoins)
-  }, [value])
+  const { value, setValue } = useFilterCoins(setCoins, coins)
 
   return (
     <div className={styles.block}>
@@ -23,3 +21,5 @@ export const FilterBlock = ({ coins, setCoins }) => {
     </div>
   )
 }
+
+export default memo(FilterBlock)

@@ -1,13 +1,12 @@
 import styles from './styles.module.scss'
+import { withRuBalance } from './../../helpers/hoc/withRuBalance'
 
-export const Card = ({ balance, setBalance }) => {
+const Card = ({ balance, setBalance }) => {
   return (
     <div className={styles.card}>
       <div className={styles.block}>
         <p>CRYPTO-FINANCE</p>
-        <button onClick={() => setBalance((prev) => prev + 1000)}>
-          Add money
-        </button>
+        <button onClick={setBalance}>Add money</button>
       </div>
 
       <div className={styles.block}>
@@ -17,3 +16,5 @@ export const Card = ({ balance, setBalance }) => {
     </div>
   )
 }
+
+export default withRuBalance(Card)

@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Header } from './components/Header/Header'
 import { Main } from './pages/Main/Main'
 import { getCoins } from './api/api'
+import { CoinsContext } from './context/coinsContext'
 
 function App() {
   const [balance, setBalance] = useState(50000)
@@ -16,16 +17,23 @@ function App() {
     }
     fetchData()
   }, [])
+
+  const addBalance = useCallback(() => {
+    setBalance((prev) => prev + 1000)
+  }, [])
+
   return (
     <>
-      <Header />
-      <Main
-        setCoins={setFilteredCoins}
-        coins={coins}
-        balance={balance}
-        setBalance={setBalance}
-        filteredCoins={filteredCoins}
-      />
+      <CoinsContext.Provider value={{ coins, filteredCoins }}>
+        <Header />
+        <Main
+          setCoins={setFilteredCoins}
+          coins={coins}
+          balance={balance}
+          setBalance={addBalance}
+          filteredCoins={filteredCoins}
+        />
+      </CoinsContext.Provider>
     </>
   )
 }
